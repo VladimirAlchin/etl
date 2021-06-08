@@ -6,6 +6,7 @@ import os
 conn_string = "host='localhost' port=54320 dbname='my_database' user='root' password='postgres'"  # source
 conn_string2 = "host='localhost' port=5433 dbname='my_database' user='root' password='postgres'"  # target
 os.system("pg_dump -d my_database -h localhost -p 54320 -U root -W postgres -t 'public.customer'")
+
 # Создаем соединение (оно поддерживает контекстный менеджер, рекомендую пользоваться им)
 # Создаем курсор - это специальный объект который делает запросы и получает их результаты
 # with psycopg2.connect(conn_string) as conn, conn.cursor() as cursor:
