@@ -72,3 +72,29 @@ with DAG(
     # src_conn = src.get_conn()
     # cursor = src_conn.cursor()
     # cursor.execute("select r_regionkey, r_name, r_comment from my_database.public.region")
+
+
+def _training_model():
+    accuracy = uniform(0.1, 10.0)
+print(f'model\'s accuracy: {accuracy}')
+
+
+def _choose_best_model():
+
+
+    print('choose best model')
+with DAG('xcom_dag', schedule_interval='@daily', default_args=default_args, catchup=False) as dag:
+    downloading_data = BashOperator(
+        task_id='downloading_data',
+        bash_command='sleep 3'
+    )
+training_model_task = [
+    PythonOperator(
+        task_id=f'training_model_{task}',
+        python_callable=_training_model
+    ) for task in ['A', 'B', 'C']]
+choose_model = PythonOperator(
+    task_id='choose_model',
+    python_callable=_choose_best_model
+)
+downloading_data >> training_model_task >> choose_model
