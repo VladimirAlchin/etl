@@ -5,7 +5,7 @@ create table core.hub_suppliers (
     sat_sup_id int,
     source_system string,
     processed_dttm datetime
-    UNIQUE(sat_sup_id)
+  --  UNIQUE(sat_sup_id)
 );
 
 
@@ -23,7 +23,7 @@ create table core.hub_products (
     sat_prod_id int,
     source_system string,
     processed_dttm datetime
-    UNIQUE(sat_sup_id)
+ --   UNIQUE(sat_sup_id)
 );
 
 
@@ -41,7 +41,7 @@ hub_orders_key SERIAL PRIMARY KEY,
 order_id int,
 source_system varchar(20),
 processed_dttm timestamp,
-UNIQUE(order_id)
+--UNIQUE(order_id)
 );
 
 drop table if exists core.s_orders;
