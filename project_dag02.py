@@ -43,6 +43,12 @@ with DAG(
         sql="""CREATE SCHEMA IF NOT EXISTS core""",
     )
 
+    create_table_core = PostgresOperator(
+        task_id="create_table_stage",
+        postgres_conn_id="post_target",
+        sql="dss_core.ddl"
+    )
+
     end = DummyOperator(
         task_id='end',
     )
