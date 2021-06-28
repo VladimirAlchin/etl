@@ -19,7 +19,7 @@ from airflow.utils.helpers import chain
 from airflow.utils.trigger_rule import TriggerRule
 import csv
 
-DAG_NAME = 'copy_source'
+DAG_NAME = 'copy_source_to_stage'
 DEFAULT_ARGS = {
     "owner": "AlchinVS",
     "start_date": datetime(2021, 6, 14),
@@ -61,24 +61,6 @@ with DAG(
     start = DummyOperator(
         task_id='start',
     )
-    create_schema_stage = PostgresOperator(
-        task_id="create_schema_stage",
-        postgres_conn_id="post_target",
-        sql="""CREATE SCHEMA IF NOT EXISTS stage""",
-    )
-
-    create_schema_dv = PostgresOperator(
-        task_id="create_schema_dv",
-        postgres_conn_id="post_target",
-        sql="""CREATE SCHEMA IF NOT EXISTS dv""",
-    )
-
-    create_table_stage = PostgresOperator(
-        task_id="create_table_stage",
-        postgres_conn_id="post_target",
-        sql="ddl_create_dag.sql"
-    )
-
     write_in_stage = PythonOperator(
         task_id='write_in_stage',
         python_callable=get_data
@@ -89,4 +71,4 @@ with DAG(
         task_id='end',
     )
 
-    start >> create_schema_stage >> create_schema_dv >> create_table_stage >> write_in_stage >> end
+    start >>  write_in_stage >> end
