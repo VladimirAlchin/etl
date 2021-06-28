@@ -35,9 +35,9 @@ create table core.sat_products (
     RetailPrice numeric(15,2)
 );
 
-drop table if exists core.h_orders;
+drop table if exists core.hub_orders;
 create table core.h_orders (
-h_order_rk SERIAL PRIMARY KEY,
+hub_orders_key SERIAL PRIMARY KEY,
 order_id int,
 source_system varchar(20),
 processed_dttm timestamp,
@@ -46,10 +46,28 @@ UNIQUE(order_id)
 
 drop table if exists core.s_orders;
 create table core.s_orders (
-h_order_rk int,
+order_id int,
 order_date timestamp,
 order_status varchar(1),
 order_priority varchar(15),
 clerk varchar(15)
 );
 
+drop table if exists core.l_prod_supl;
+create table core.l_prod_supl (
+l_prod_supl_pk SERIAL PRIMARY KEY,
+hub_sup_key int,
+hub_prod_key int,
+source_system varchar(20),
+processed_dttm timestamp,
+);
+
+
+drop table if exists core.l_prod_ord;
+create table core.l_prod_supl (
+l_prod_ord_pk SERIAL PRIMARY KEY,
+hub_sup_key int,
+hub_orders_key int,
+source_system varchar(20),
+processed_dttm timestamp,
+);
