@@ -44,13 +44,13 @@ with DAG(
     )
 
     create_table_core = PostgresOperator(
-        task_id="create_table_stage",
+        task_id="create_table_core",
         postgres_conn_id="post_target",
-        sql="dss_core.ddl"
+        sql="dss_core.sql"
     )
 
     end = DummyOperator(
         task_id='end',
     )
 
-    start >> create_schema_core >> end
+    start >> create_schema_core >> create_table_core >> end
