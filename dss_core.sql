@@ -42,20 +42,25 @@ create table core.sat_products (
 
 
 drop table if exists core.hub_orders;
-create table core.h_orders (
-hub_orders_key SERIAL PRIMARY KEY,
+create table core.hub_orders (
+h_order_rk SERIAL PRIMARY KEY,
 order_id int,
 source_system varchar(20),
-processed_dttm timestamp
+processed_dttm timestamp,
+
 );
 
-drop table if exists core.s_orders;
-create table core.s_orders (
-order_id int,
+drop table if exists core.sat_orders;
+create table core.sat_orders (
+h_order_rk int,
 order_date timestamp,
 order_status varchar(1),
 order_priority varchar(15),
-clerk varchar(15)
+clerk varchar(15),
+source_system text,
+valid_from_dttm timestamp,
+valid_to_dttm timestamp,
+processed_dttm timestamp
 );
 
 drop table if exists core.l_prod_supl;
